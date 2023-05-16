@@ -10,21 +10,17 @@ public class MonoTest {
 
     @Test
     public void monoUsingJustOrEmpty() {
-        Mono<String> mono = Mono.justOrEmpty(null); //Mono.Empty();
-        StepVerifier.create(mono.log()).verifyComplete();
-        System.out.println(mono.log());
+        Mono<String> mono = Mono.justOrEmpty("hello"); //Mono.Empty();
+        StepVerifier.create(mono.log()).expectNext("hello").verifyComplete();
+      //  System.out.println(mono.subscribe(System.out::println));
     }
 
     @Test
     public void monoUsingSupplier() {
         Supplier<String> stringSupplier = () -> "hello";
-
         Mono<String> stringMono = Mono.fromSupplier(stringSupplier);
         System.out.println(stringSupplier.get());
-
-        StepVerifier.create(stringMono.log())
-                .expectNext("hello")
-                .verifyComplete();
+        StepVerifier.create(stringMono.log()).expectNext("hello").verifyComplete();
     }
 
 
